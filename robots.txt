@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gremiopindorama-blush.vercel.app/sitemap.xml
