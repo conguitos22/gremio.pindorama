@@ -40,7 +40,6 @@
   <input id="password" type="password" placeholder="Senha">
   <div id="err"></div>
   <button class="btn-gold" style="width:100%" onclick="login()">Entrar</button>
-  <button class="btn-out" style="width:100%;margin-top:8px" onclick="signup()">Criar conta</button>
 </div>
 
 <div id="app">
@@ -123,17 +122,6 @@ async function login(){
   enterApp();
 }
 async function logout(){ await sb.auth.signOut(); location.reload(); }
-
-async function signup(){
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  if(!email || !password) { document.getElementById('err').innerText = 'Preencha e-mail e senha primeiro.'; return; }
-  const { data, error } = await sb.auth.signUp({ email, password });
-  if(error){ document.getElementById('err').innerText = error.message; return; }
-  if(data.session){ enterApp(); return; }
-  document.getElementById('err').style.color = '#8fe38f';
-  document.getElementById('err').innerText = 'Conta criada! Confira seu e-mail pra confirmar (se pedir), depois clique em Entrar.';
-}
 
 async function enterApp(){
   document.getElementById('login-screen').style.display='none';
