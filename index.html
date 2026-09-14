@@ -1393,9 +1393,20 @@ document.getElementById('muralFeed').innerHTML = muralItems.map(m=>`
     if (typeof renderVideos === 'function') renderVideos();
   }
 
+  async function loadDynamicBoard(){
+    const { data, error } = await sb.from('board_members').select('*').order('order_index');
+    if(error || !data || !data.length) return;
+    if(typeof boardMembers === 'undefined') return;
+    data.forEach(m=>{
+      boardMembers.push({ name: m.name, cargo: m.cargo, photo: m.photo_url || '' });
+    });
+    if (typeof renderBoard === 'function') renderBoard();
+  }
+
   document.addEventListener('DOMContentLoaded', function(){
     loadDynamicNews();
     loadDynamicVideosIntoGrid();
+    loadDynamicBoard();
   });
 })();
 </script>
