@@ -1187,7 +1187,8 @@ renderBoard();
    porque vídeo é muito pesado para isso. Para adicionar um novo, coloque o arquivo .mp4 na
    pasta videos/ e adicione uma linha abaixo com o nome do arquivo e uma legenda. */
 const videoItems = [];
-document.getElementById('videoGrid').innerHTML = videoItems.map(v=>`
+function renderVideos(){
+  document.getElementById('videoGrid').innerHTML = videoItems.map(v=>`
   <div class="video-card">
     <video controls preload="metadata" playsinline>
       <source src="${v.src}" type="video/mp4">
@@ -1196,6 +1197,8 @@ document.getElementById('videoGrid').innerHTML = videoItems.map(v=>`
     <p>${v.label}</p>
   </div>
 `).join('');
+}
+renderVideos();
 
 /* ============ GALERIA ============ */
 /* Para trocar por uma foto de verdade, basta adicionar "img: 'https://link-da-foto.jpg'"
