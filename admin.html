@@ -149,8 +149,14 @@ async function loadBoard(){
   const { data } = await sb.from('board_members').select('*').order('order_index');
   const el = document.getElementById('board-list'); el.innerHTML = '';
   (data||[]).forEach(m=>{
-    el.innerHTML += `<div class="item"><div>${m.photo_url?`<img src="${m.photo_url}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px">`:''}<b>${m.name}</b><small>${m.cargo}</small></div><button class="del" onclick="delRow('board_members','${m.id}',loadBoard)">Excluir</button></div>`;
+    el.innerHTML += `<div class="item"><div>${m.photo_url?`<img src="${m.photo_url}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px">`:''}<b>${m.name}</b><small>${m.cargo}</small></div><div><button class="btn-out" onclick='editBoard(${JSON.stringify(m)})'>Editar</button> <button class="del" onclick="delRow('board_members','${m.id}',loadBoard)">Excluir</button></div></div>`;
   });
+}
+async function editBoard(m){
+  const name = prompt('Nome:', m.name); if(name===null) return;
+  const cargo = prompt('Cargo:', m.cargo); if(cargo===null) return;
+  await sb.from('board_members').update({ name, cargo }).eq('id', m.id);
+  loadBoard();
 }
 async function addBoard(){
   const name = document.getElementById('b-name').value;
@@ -169,8 +175,13 @@ async function loadVideos(){
   const { data } = await sb.from('videos').select('*').order('order_index');
   const el = document.getElementById('videos-list'); el.innerHTML = '';
   (data||[]).forEach(v=>{
-    el.innerHTML += `<div class="item"><b>${v.label}</b><button class="del" onclick="delRow('videos','${v.id}',loadVideos)">Excluir</button></div>`;
+    el.innerHTML += `<div class="item"><b>${v.label}</b><div><button class="btn-out" onclick='editVideo(${JSON.stringify(v)})'>Editar</button> <button class="del" onclick="delRow('videos','${v.id}',loadVideos)">Excluir</button></div></div>`;
   });
+}
+async function editVideo(v){
+  const label = prompt('Nome do vídeo:', v.label); if(label===null) return;
+  await sb.from('videos').update({ label }).eq('id', v.id);
+  loadVideos();
 }
 async function addVideo(){
   const label = document.getElementById('v-label').value;
@@ -187,8 +198,14 @@ async function loadNews(){
   const { data } = await sb.from('news').select('*').order('created_at',{ascending:false});
   const el = document.getElementById('news-list'); el.innerHTML = '';
   (data||[]).forEach(n=>{
-    el.innerHTML += `<div class="item"><div><b>${n.title}</b><small>${n.category}</small></div><button class="del" onclick="delRow('news','${n.id}',loadNews)">Excluir</button></div>`;
+    el.innerHTML += `<div class="item"><div><b>${n.title}</b><small>${n.category}</small></div><div><button class="btn-out" onclick='editNews(${JSON.stringify(n)})'>Editar</button> <button class="del" onclick="delRow('news','${n.id}',loadNews)">Excluir</button></div></div>`;
   });
+}
+async function editNews(n){
+  const title = prompt('Título:', n.title); if(title===null) return;
+  const body = prompt('Texto:', n.body||''); if(body===null) return;
+  await sb.from('news').update({ title, body }).eq('id', n.id);
+  loadNews();
 }
 async function addNews(){
   const title = document.getElementById('n-title').value;
@@ -205,8 +222,15 @@ async function loadEvents(){
   const { data } = await sb.from('events').select('*').order('event_date');
   const el = document.getElementById('events-list'); el.innerHTML = '';
   (data||[]).forEach(ev=>{
-    el.innerHTML += `<div class="item"><div><b>${ev.title}</b><small>${ev.event_date} · ${ev.event_type}</small></div><button class="del" onclick="delRow('events','${ev.id}',loadEvents)">Excluir</button></div>`;
+    el.innerHTML += `<div class="item"><div><b>${ev.title}</b><small>${ev.event_date} · ${ev.event_type}</small></div><div><button class="btn-out" onclick='editEvent(${JSON.stringify(ev)})'>Editar</button> <button class="del" onclick="delRow('events','${ev.id}',loadEvents)">Excluir</button></div></div>`;
   });
+}
+async function editEvent(ev){
+  const title = prompt('Título:', ev.title); if(title===null) return;
+  const event_date = prompt('Data (aaaa-mm-dd):', ev.event_date); if(event_date===null) return;
+  const description = prompt('Descrição:', ev.description||''); if(description===null) return;
+  await sb.from('events').update({ title, event_date, description }).eq('id', ev.id);
+  loadEvents();
 }
 async function addEvent(){
   const title = document.getElementById('e-title').value;
