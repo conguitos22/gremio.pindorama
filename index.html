@@ -1403,10 +1403,30 @@ document.getElementById('muralFeed').innerHTML = muralItems.map(m=>`
     if (typeof renderBoard === 'function') renderBoard();
   }
 
+  async function loadDynamicEvents(){
+    const { data, error } = await sb.from('events').select('*');
+    if(error || !data || !data.length) return;
+    if(typeof eventsData === 'undefined') return;
+    const typeMap = { 'Evento':'event', 'Reunião':'meet', 'Competição':'comp' };
+    data.forEach(ev=>{
+      eventsData.push({
+        date: ev.event_date,
+        title: ev.title,
+        time: '',
+        local: '',
+        type: typeMap[ev.event_type] || 'event',
+        desc: ev.description || ''
+      });
+    });
+    if (typeof rebuildEventsMap === 'function') rebuildEventsMap();
+    if (typeof renderCalendar === 'function') renderCalendar();
+  }
+
   document.addEventListener('DOMContentLoaded', function(){
     loadDynamicNews();
     loadDynamicVideosIntoGrid();
     loadDynamicBoard();
+    loadDynamicEvents();
   });
 })();
 </script>
