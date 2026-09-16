@@ -925,7 +925,8 @@ let newsItems = [
   {
     cat:'educacao', icon:'📚', label:'Educação', date:'28 ago 2026',
     title:'Inscrições do PAS já começaram',
-    resumo:'O grêmio reuniu os principais prazos e dicas para quem vai encarar o Programa de Avaliação Seriada este ano.'
+    resumo:'O grêmio reuniu os principais prazos e dicas para quem vai encarar o Programa de Avaliação Seriada este ano.',
+    link:'https://www.cebraspe.org.br/pas/subprogramas'
   },
   {
     cat:'representacao', icon:'✊', label:'Representação', date:'20 ago 2026',
@@ -970,6 +971,7 @@ function renderNews(filter){
 function openNewsModal(i){
   const n = newsItems[i];
   const formBtn = n.form ? `<a href="${n.form}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Inscreva-se</a>` : '';
+  const linkBtn = n.link ? `<a href="${n.link}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Ver página oficial do PAS</a>` : '';
   const precosHtml = n.precos ? `<div class="modal-meta">${n.precos.map(p=>`<div style="display:flex;justify-content:space-between;"><b style="min-width:auto;">${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>` : '';
   const extraText = n.precos ? '' : ' Este espaço pode ser expandido pela diretoria com o texto completo do comunicado.';
   openModal(`
@@ -978,7 +980,7 @@ function openNewsModal(i){
     <p class="modal-desc" style="color:rgba(10,27,61,.5);font-size:13px;margin-top:0;">${n.date}</p>
     <p class="modal-desc">${n.resumo}${extraText}</p>
     ${precosHtml}
-    <div class="modal-actions">${formBtn}<button class="btn btn-outline btn-sm" style="border-color:rgba(10,27,61,.2)" onclick="closeModal()">Fechar</button></div>
+    <div class="modal-actions">${formBtn}${linkBtn}<button class="btn btn-outline btn-sm" style="border-color:rgba(10,27,61,.2)" onclick="closeModal()">Fechar</button></div>
   `);
 }
 renderNews('todos');
