@@ -911,7 +911,43 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeModal(); cl
 /* ============ NOTÍCIAS DATA ============ */
 /* Para trocar o ícone por uma foto de verdade num card de notícia, adicione
    "img: 'https://link-da-foto.jpg'" no item — como no primeiro exemplo abaixo. */
-let newsItems = [];
+let newsItems = [
+  {
+    cat:'avisos', icon:'📢', label:'Avisos', date:'10 set 2026',
+    title:'Eleição da nova chapa: inscrições abertas',
+    resumo:'Quer fazer parte da diretoria do Pindorama? As inscrições para a próxima chapa já estão abertas até o fim do mês.'
+  },
+  {
+    cat:'cultura', icon:'🎭', label:'Cultura', date:'05 set 2026',
+    title:'Grupo de Teatro estreia peça original',
+    resumo:'Depois de meses de ensaio, o Grupo de Teatro do Pindorama apresenta sua primeira peça autoral no auditório.'
+  },
+  {
+    cat:'educacao', icon:'📚', label:'Educação', date:'28 ago 2026',
+    title:'Inscrições do PAS já começaram',
+    resumo:'O grêmio reuniu os principais prazos e dicas para quem vai encarar o Programa de Avaliação Seriada este ano.'
+  },
+  {
+    cat:'representacao', icon:'✊', label:'Representação', date:'20 ago 2026',
+    title:'Quem faz parte da chapa Pindorama?',
+    resumo:'Conheça os estudantes por trás da atual diretoria e as áreas que cada um representa dentro do grêmio.'
+  },
+  {
+    cat:'eventos', icon:'🎉', label:'Eventos', date:'16 ago 2026',
+    title:'Semana Indígena tem programação especial',
+    resumo:'Rodas de conversa, exposições e apresentações culturais marcam a Semana dos Povos Indígenas na escola.'
+  },
+  {
+    cat:'passeios', icon:'🚌', label:'Passeios', date:'10 ago 2026',
+    title:'Passeio ao museu tem vagas limitadas',
+    resumo:'O próximo passeio cultural do grêmio será a um museu da cidade. Inscrições por ordem de chegada.'
+  },
+  {
+    cat:'avisos', icon:'📢', label:'Avisos', date:'08 ago 2026',
+    title:'Venda de docinhos: confira a tabela de preços',
+    resumo:'A renda da venda de docinhos ajuda a financiar os projetos e eventos organizados pelo grêmio.'
+  }
+];
 const newsGrid = document.getElementById('newsGrid');
 function renderNews(filter){
   const filtered = filter==='todos' ? newsItems : newsItems.filter(n=>n.cat===filter);
@@ -1373,7 +1409,6 @@ document.getElementById('muralFeed').innerHTML = muralItems.map(m=>`
   }
 
   document.addEventListener('DOMContentLoaded', function(){
-    loadDynamicNews();
     loadDynamicVideosIntoGrid();
     loadDynamicBoard();
     loadDynamicEvents();
